@@ -1,3 +1,0 @@
-C:/Users/baojia/projects/CppMetaProgramming/build/CMakeFiles/CppMeta.dir
-C:/Users/baojia/projects/CppMetaProgramming/build/CMakeFiles/edit_cache.dir
-C:/Users/baojia/projects/CppMetaProgramming/build/CMakeFiles/rebuild_cache.dir
