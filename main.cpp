@@ -33,16 +33,19 @@ struct Ref_<false>{
 };
 
 
-
-template <bool AddOrRemove, typename T>
+template <typename T>
+template <bool AddOrRemove>
 using Ref = typename Ref_<AddOrRemove>::template type<T>;
 
 template <typename T>
 using Res_ = Ref<true>;
 
 int main(){
-    Fun<int> h = 3;
+    int h = 3;
     cout << h << endl;
     Type_<std::remove_reference, int&>::type d = 4;
+    Res_<int>::type a = h;
+    h = 5;
+    cout << a << endl;
     return 0;
 }
