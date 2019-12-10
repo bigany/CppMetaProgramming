@@ -1,27 +1,48 @@
-#include <boost/foreach.hpp>
-#include <boost/assign.hpp>
-
 #include <iostream>
-
 using namespace std;
-void foreach_test(){
-    using namespace boost::assign;
 
-    vector<int> v = (list_of(1), 2, 3, 4, 5);
+template <typename T>
+struct Fun_{ using type = T; };
+template <>
+struct Fun_<int> { 
+    using type = unsigned int; 
+    using reference_type = int&;
+    using const_reference_type = const int&;
+    using value_type = int;
+};
 
-    BOOST_FOREACH(auto& x, v){
-        cout << x << ", ";
-    }
-    cout << endl;
+template <typename T>
+using Fun = typename Fun_<T>::type;
 
-    BOOST_REVERSE_FOREACH(auto& x, v){
-        cout << x << ", ";
-    }
-    cout << endl;
-}
+template <template <typename> class T1, typename T2>
+struct Type_{ using type = typename T1<T2>::type; };
+
+
+template <bool AddOrRemoveRef> struct Ref_;
+
+template <>
+struct Ref_<true>{
+    template <typename T>
+    using type = std::add_lvalue_reference<T>;
+};
+
+template <>
+struct Ref_<false>{
+    template <typename T>
+    using type = std::remove_reference<T>;
+};
+
+
+
+template <bool AddOrRemove, typename T>
+using Ref = typename Ref_<AddOrRemove>::template type<T>;
+
+template <typename T>
+using Res_ = Ref<true>;
 
 int main(){
-
-    foreach_test();
+    Fun<int> h = 3;
+    cout << h << endl;
+    Type_<std::remove_reference, int&>::type d = 4;
     return 0;
 }
